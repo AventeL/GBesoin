@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "245749094954",
+    "project_id": "gbesoin-b81ac",
+    "storage_bucket": "gbesoin-b81ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245749094954:android:6ec42c9ce709b76a100153",
+        "android_client_info": {
+          "package_name": "com.example.gbesoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245749094954-6me67h7vlvcc4tl181muhhodr8gmacru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxuvyGxAVovsvSzUfhnn-BbALxxk-FEUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245749094954-6me67h7vlvcc4tl181muhhodr8gmacru.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
