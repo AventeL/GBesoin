@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:gbesoin/providers/auth_firebase.dart';
 import 'package:gbesoin/screens/choicescreen.dart';
 import 'package:gbesoin/screens/homescreen.dart';
 
@@ -13,36 +14,6 @@ class LoginScreen extends StatelessWidget {
   final bool isFirstTime;
 
   Duration get loginTime => const Duration(milliseconds: 2250);
-
-  Future<String?> _authUser(LoginData data) {
-    debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return "Ce compte n'existe pas";
-      }
-      if (users[data.name] != data.password) {
-        return 'Ce mot de passe ne convient pas';
-      }
-      return null;
-    });
-  }
-
-  Future<String?> _signupUser(data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
-
-  Future<String?> _recoverPassword(String name) {
-    debugPrint('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return "Ce compte n'existe pas";
-      }
-      return null;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +31,8 @@ class LoginScreen extends StatelessWidget {
             "Vous allez recevoir un mail pour réinitialiser votre mot de passe",
         recoverPasswordIntro: "",
       ),
-      onLogin: _authUser,
-      onSignup: _signupUser,
+      onLogin: AuthenticationHelper().signIn,
+      onSignup: AuthenticationHelper().signUp,
       onSubmitAnimationCompleted: () {
         if (isFirstTime) {
           Navigator.of(context).pushReplacement(
@@ -71,7 +42,7 @@ class LoginScreen extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const HomeScreen()));
         }
       },
-      onRecoverPassword: _recoverPassword,
+      onRecoverPassword: AuthenticationHelper().recoverPassword,
       theme: LoginTheme(
           logoWidth: 1,
           primaryColor: Colors.black87,
