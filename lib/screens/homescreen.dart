@@ -1,15 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:gbesoin/models/listelement.dart';
+import 'package:gbesoin/screens/choicescreen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+        appBar: AppBar(
+            title: const Text(
+              "VENUS",
+              style: TextStyle(
+                color: Colors.white,
+                letterSpacing: 3,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.group),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChoiceScreen()));
+                },
+              )
+            ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Alert(
@@ -37,10 +58,10 @@ class HomeScreen extends StatelessWidget {
           },
           child: const Icon(Icons.add),
         ),
-        backgroundColor: Colors.black87,
+        backgroundColor: const Color(0xff262129),
         body: Padding(
-          padding: EdgeInsets.only(
-              left: width * 0.1, right: width * 0.1, top: height * 0.1),
+          padding:
+              EdgeInsets.only(left: width * 0.1, right: width * 0.1, top: 20),
           child: Container(
             height: height * 0.75,
             width: width * 0.8,

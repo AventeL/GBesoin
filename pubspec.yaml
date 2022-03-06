@@ -41,6 +41,8 @@ dependencies:
   rflutter_alert: ^2.0.4
   flutter_login: ^3.0.1
   animated_button: ^0.2.0
+  crypt: ^4.2.1
+  
 
 dev_dependencies:
   flutter_test:

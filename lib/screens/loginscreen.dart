@@ -22,6 +22,7 @@ class LoginScreen extends StatelessWidget {
       messages: LoginMessages(
         userHint: "Email",
         passwordHint: "Mot de passe",
+        goBackButton: "Retour",
         loginButton: "Connexion".toUpperCase(),
         signupButton: "S'inscrire".toUpperCase(),
         forgotPasswordButton: "Mot de passe oublié ?",
@@ -45,7 +46,7 @@ class LoginScreen extends StatelessWidget {
       onRecoverPassword: AuthenticationHelper().recoverPassword,
       theme: LoginTheme(
           logoWidth: 1,
-          primaryColor: Colors.black87,
+          primaryColor: const Color(0xff262129),
           accentColor: Colors.green,
           inputTheme: const InputDecorationTheme(
               iconColor: Colors.green,

@@ -26,11 +26,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'GBesoin',
-      theme: ThemeData(
-          primarySwatch: Colors.green, backgroundColor: Colors.black87),
-      home: getScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'GBesoin',
+        theme: ThemeData(
+            primarySwatch: Colors.green, backgroundColor: Colors.black87),
+        home: const HomeScreen());
   }
 }
