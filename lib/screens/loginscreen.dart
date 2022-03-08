@@ -39,8 +39,10 @@ class LoginScreen extends StatelessWidget {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => const ChoiceScreen()));
         } else {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const HomeScreen(
+                    idGroup: 1,
+                  )));
         }
       },
       onRecoverPassword: AuthenticationHelper().recoverPassword,

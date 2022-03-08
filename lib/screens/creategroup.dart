@@ -2,6 +2,7 @@ import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gbesoin/providers/storage_firestore.dart';
 import 'package:crypt/crypt.dart';
+import 'package:gbesoin/screens/homescreen.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({Key? key, required this.isCreate}) : super(key: key);
@@ -18,7 +19,10 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   bool isPasswordEquals = false;
   bool isGroupNameNull = false;
   bool isPasswordGood = false;
+  bool isPasswordMatch = false;
   bool isValide = false;
+  List groups = [];
+
   void dispose() {
     groupNameController.dispose();
     passwordController.dispose();
@@ -54,8 +58,27 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     }
   }
 
-  void loginToGroup(int i) {
-    print(StorageHelper().getGroupById(i));
+  void getElementFromDataBase(String name) {
+    StorageHelper()
+        .getGroupByName(name.toLowerCase())
+        .then((value) => setState(() {
+              groups = value.toList();
+            }));
+  }
+
+  bool canConnect(String name) {
+    if (groups.isEmpty) {
+      return false;
+    } else if (groups[0]['name']
+                .toString()
+                .toLowerCase()
+                .compareTo(groupNameController.text.toLowerCase()) ==
+            0 &&
+        Crypt(groups[0]['password']).match(passwordController.text)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -116,7 +139,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: AnimatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              int newId =
+                                  await StorageHelper().getNumberOfGroup() + 1;
                               setState(() {
                                 groupNameController.text.isNotEmpty
                                     ? isGroupNameNull = false
@@ -130,11 +155,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                               });
                               if (checkIsValide()) {
                                 StorageHelper().saveGroup(
-                                    idGroup: 1,
+                                    idGroup: newId,
                                     name: groupNameController.text,
                                     password:
                                         Crypt.sha256(passwordController.text)
                                             .toString());
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomeScreen(idGroup: newId)));
                               }
                             },
                             child: const Text(
@@ -190,21 +218,32 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         TextField(
                           controller: passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.lock),
-                            labelText: 'Mot de passe du groupe',
-                          ),
+                          decoration: InputDecoration(
+                              icon: const Icon(Icons.lock),
+                              labelText: 'Mot de passe du groupe',
+                              errorText: isPasswordMatch
+                                  ? "Aucun groupe ne correspond à ces identifiants"
+                                  : null),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: AnimatedButton(
-                            onPressed: () {
-                              loginToGroup(1);
+                            onPressed: () async {
                               setState(() {
                                 groupNameController.text.isNotEmpty
                                     ? isGroupNameNull = false
                                     : isGroupNameNull = true;
+                                canConnect(groupNameController.text)
+                                    ? isPasswordMatch = false
+                                    : isPasswordMatch = true;
                               });
+                              getElementFromDataBase(groupNameController.text);
+                              if (canConnect(groupNameController.text)) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HomeScreen(
+                                          idGroup: groups[0]['idGroup'],
+                                        )));
+                              }
                             },
                             child: const Text(
                               "Se connecter",

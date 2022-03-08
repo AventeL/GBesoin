@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     if (isFirstTime) {
       return const LoginScreen(isFirstTime: true);
     } else {
-      return const HomeScreen();
+      return const HomeScreen(idGroup: 1,);
     }
   }
 
@@ -30,6 +30,6 @@ class MyApp extends StatelessWidget {
         title: 'GBesoin',
         theme: ThemeData(
             primarySwatch: Colors.green, backgroundColor: Colors.black87),
-        home: const HomeScreen());
+        home: const HomeScreen(idGroup: 1,));
   }
 }

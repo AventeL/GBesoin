@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gbesoin/providers/auth_firebase.dart';
 
@@ -20,7 +18,6 @@ class StorageHelper {
               for (var document in querySnapshot.docs)
                 {res.add(document.data())}
             });
-    print(res);
     return res;
   }
 
@@ -36,17 +33,39 @@ class StorageHelper {
     return res;
   }
 
+  Future<int> getNumberOfGroup() async {
+    int res = 0;
+    await groups
+        .get()
+        .then((querySnapshot) => {res = querySnapshot.docs.length});
+    return res;
+  }
+
 //Elements
   CollectionReference elements =
       FirebaseFirestore.instance.collection('element');
-  void saveElement({name, idElement, idGroup}) {
-    elements.add({"name": name, "idElement": idElement, "idGroup": idGroup});
+
+  void saveElement({name, idGroup}) {
+    elements.add({"name": name, "idGroup": idGroup});
   }
 
-  Future<List> getElement(idElement) async {
+  Future<List> getElementbyName(name) async {
     var res = [];
     await elements
-        .where("idElement", isEqualTo: idElement)
+        .where("name".toLowerCase(), isEqualTo: name.toString().toLowerCase())
+        .get()
+        .then((querySnapshot) => {
+              for (var document in querySnapshot.docs)
+                {res.add(document.data())}
+            });
+    return res;
+  }
+
+  Future<List> getElementbyNameAndId(name, idGroup) async {
+    var res = [];
+    await elements
+        .where("idGroup", isEqualTo: idGroup)
+        .where("name".toLowerCase(), isEqualTo: name.toString().toLowerCase())
         .get()
         .then((querySnapshot) => {
               for (var document in querySnapshot.docs)
