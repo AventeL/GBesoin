@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:gbesoin/providers/auth_firebase.dart';
 import 'package:gbesoin/screens/creategroup.dart';
 import 'package:animated_button/animated_button.dart';
+import 'package:gbesoin/screens/loginscreen.dart';
 
 class ChoiceScreen extends StatelessWidget {
-  const ChoiceScreen({Key? key}) : super(key: key);
+  final bool isFirstTime;
+  const ChoiceScreen({Key? key, required this.isFirstTime}) : super(key: key);
+
+  Widget getActions(context) {
+    if (isFirstTime) {
+      return const SizedBox();
+    } else {
+      return TextButton(
+          onPressed: () async {
+            AuthenticationHelper().signOut();
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          },
+          child: const Text("Se déconnecter"));
+    }
+  }
+
+  bool checkFirstTime() {
+    if (isFirstTime) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff262129),
       appBar: AppBar(
+        automaticallyImplyLeading: !checkFirstTime(),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        actions: [
+          getActions(context),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(

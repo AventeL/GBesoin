@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gbesoin/models/listelement.dart';
 import 'package:gbesoin/providers/storage_firestore.dart';
 import 'package:gbesoin/screens/choicescreen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.idGroup}) : super(key: key);
@@ -36,10 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('element')
         .where('idGroup', isEqualTo: widget.idGroup)
         .snapshots();
-    var group = FirebaseFirestore.instance
-        .collection('group')
-        .where('idGroup', isEqualTo: widget.idGroup)
-        .snapshots();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     StorageHelper().getGroupById(widget.idGroup).then(
@@ -55,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasData) {
             return Scaffold(
                 appBar: AppBar(
+                    leading: null,
+                    automaticallyImplyLeading: false,
                     title: Text(
                       name.toUpperCase(),
                       style: const TextStyle(
@@ -71,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: const Icon(Icons.group),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ChoiceScreen()));
+                              builder: (context) => const ChoiceScreen(
+                                    isFirstTime: false,
+                                  )));
                         },
                       )
                     ]),

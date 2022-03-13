@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:gbesoin/providers/local_storage.dart';
 
 class AuthenticationHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   get user => _auth.currentUser;
-
   Future<String?> signIn(LoginData data) async {
     try {
       await _auth.signInWithEmailAndPassword(
@@ -28,6 +28,7 @@ class AuthenticationHelper {
   }
 
   Future<void> signOut() async {
+    LocalStorage().setToNullIdGroup();
     await _auth.signOut();
   }
 
@@ -40,7 +41,7 @@ class AuthenticationHelper {
     }
   }
 
-  String getUid() {
-    return user.uid;
+  Future<String?> getUserId() async {
+    return _auth.currentUser?.getIdToken().toString();
   }
 }

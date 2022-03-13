@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gbesoin/providers/auth_firebase.dart';
 
 class StorageHelper {
-  var uid = AuthenticationHelper().getUid();
 //Group
   CollectionReference groups = FirebaseFirestore.instance.collection('group');
   void saveGroup({name, password, idGroup}) {

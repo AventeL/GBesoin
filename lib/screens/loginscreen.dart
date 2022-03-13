@@ -2,17 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:gbesoin/providers/auth_firebase.dart';
 import 'package:gbesoin/screens/choicescreen.dart';
-import 'package:gbesoin/screens/homescreen.dart';
-
-const users = {
-  'test@gmail.com': 'test',
-};
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key, required this.isFirstTime}) : super(key: key);
-
-  final bool isFirstTime;
-
+  const LoginScreen({Key? key}) : super(key: key);
   Duration get loginTime => const Duration(milliseconds: 2250);
 
   @override
@@ -35,15 +27,10 @@ class LoginScreen extends StatelessWidget {
       onLogin: AuthenticationHelper().signIn,
       onSignup: AuthenticationHelper().signUp,
       onSubmitAnimationCompleted: () {
-        if (isFirstTime) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const ChoiceScreen()));
-        } else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const HomeScreen(
-                    idGroup: 1,
-                  )));
-        }
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const ChoiceScreen(
+                  isFirstTime: true,
+                )));
       },
       onRecoverPassword: AuthenticationHelper().recoverPassword,
       theme: LoginTheme(

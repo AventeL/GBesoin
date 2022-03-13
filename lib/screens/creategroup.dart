@@ -1,5 +1,6 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:gbesoin/providers/local_storage.dart';
 import 'package:gbesoin/providers/storage_firestore.dart';
 import 'package:crypt/crypt.dart';
 import 'package:gbesoin/screens/homescreen.dart';
@@ -23,6 +24,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   bool isValide = false;
   List groups = [];
 
+  @override
   void dispose() {
     groupNameController.dispose();
     passwordController.dispose();
@@ -140,8 +142,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           padding: const EdgeInsets.only(top: 20),
                           child: AnimatedButton(
                             onPressed: () async {
-                              int newId =
-                                  await StorageHelper().getNumberOfGroup() + 1;
                               setState(() {
                                 groupNameController.text.isNotEmpty
                                     ? isGroupNameNull = false
@@ -154,15 +154,20 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     : isPasswordEquals = true;
                               });
                               if (checkIsValide()) {
+                                int newId =
+                                    await StorageHelper().getNumberOfGroup() +
+                                        1;
+                                LocalStorage().storeIdGroup(newId);
                                 StorageHelper().saveGroup(
                                     idGroup: newId,
                                     name: groupNameController.text,
                                     password:
                                         Crypt.sha256(passwordController.text)
                                             .toString());
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        HomeScreen(idGroup: newId)));
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomeScreen(idGroup: newId)));
                               }
                             },
                             child: const Text(
@@ -239,10 +244,13 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                               });
                               getElementFromDataBase(groupNameController.text);
                               if (canConnect(groupNameController.text)) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => HomeScreen(
-                                          idGroup: groups[0]['idGroup'],
-                                        )));
+                                LocalStorage()
+                                    .storeIdGroup(groups[0]['idGroup']);
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                              idGroup: groups[0]['idGroup'],
+                                            )));
                               }
                             },
                             child: const Text(
