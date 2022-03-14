@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:gbesoin/main.dart';
 import 'package:gbesoin/providers/auth_firebase.dart';
 import 'package:gbesoin/screens/choicescreen.dart';
 
@@ -9,8 +10,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color mainColor = const Color(0xff8D0008);
     return FlutterLogin(
-      logo: null,
+      logo: const AssetImage('assets/logo.png'),
       messages: LoginMessages(
         userHint: "Email",
         passwordHint: "Mot de passe",
@@ -34,28 +36,30 @@ class LoginScreen extends StatelessWidget {
       },
       onRecoverPassword: AuthenticationHelper().recoverPassword,
       theme: LoginTheme(
-          logoWidth: 1,
-          primaryColor: const Color(0xff262129),
-          accentColor: Colors.green,
-          inputTheme: const InputDecorationTheme(
-              iconColor: Colors.green,
+          logoWidth: 100,
+          primaryColor: const Color(0xff18181B),
+          accentColor: mainColor,
+          errorColor: Colors.red,
+          buttonStyle: const TextStyle(color: Colors.white),
+          inputTheme: InputDecorationTheme(
+              iconColor: mainColor,
               focusColor: Colors.red,
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
-                    color: Colors.black,
+                    color: mainColor,
                   )),
-              errorBorder: OutlineInputBorder(
+              errorBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
                     color: Colors.red,
                   )),
               focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
-                    color: Colors.green,
+                    color: mainColor,
                   ))),
-          buttonTheme: const LoginButtonTheme(backgroundColor: Colors.green)),
+          buttonTheme: LoginButtonTheme(backgroundColor: mainColor)),
     );
   }
 }

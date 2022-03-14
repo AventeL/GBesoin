@@ -85,9 +85,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color mainColor = const Color(0xff8D0008);
+
     if (widget.isCreate) {
       return Scaffold(
-          backgroundColor: const Color(0xff262129),
+          backgroundColor: const Color(0xff18181B),
           appBar: AppBar(
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
@@ -178,7 +180,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            color: Colors.green,
+                            color: mainColor,
                           ),
                         )
                       ],
@@ -188,7 +190,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           ));
     } else {
       return Scaffold(
-          backgroundColor: const Color(0xff262129),
+          backgroundColor: const Color(0xff18181B),
           appBar: AppBar(
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
@@ -261,7 +263,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            color: Colors.green,
+                            color: mainColor,
                           ),
                         )
                       ],

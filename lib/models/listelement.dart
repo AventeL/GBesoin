@@ -21,11 +21,14 @@ class ListElement extends StatefulWidget {
 
 class _ListElementState extends State<ListElement> {
   List element = [];
+  Color mainColor = const Color(0xff8D0008);
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
 
   void deleteElement(String reference) {
-    FirebaseFirestore.instance.collection('element').doc(reference).delete();
+    setState(() {
+      FirebaseFirestore.instance.collection('element').doc(reference).delete();
+    });
   }
 
   void _onClick() async {
@@ -33,6 +36,7 @@ class _ListElementState extends State<ListElement> {
       _btnController.success();
       Timer(const Duration(milliseconds: 600), () {
         deleteElement(widget.reference);
+        _btnController.reset();
       });
     });
   }
@@ -40,7 +44,7 @@ class _ListElementState extends State<ListElement> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(
           "-  " + widget.text.toUpperCase(),
@@ -53,10 +57,10 @@ class _ListElementState extends State<ListElement> {
           color: Colors.white,
           elevation: 0,
           successColor: Colors.white,
-          valueColor: Colors.green,
-          child: const Icon(
+          valueColor: mainColor,
+          child: Icon(
             Icons.shopping_cart,
-            color: Colors.green,
+            color: mainColor,
           ),
           controller: _btnController,
           onPressed: _onClick,

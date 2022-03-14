@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController nameElementController = TextEditingController();
   int idElement = 0;
   String name = "";
+  Color mainColor = const Color(0xff8D0008);
 
   void getTextFieldValue() {
     if (nameElementController.text.isNotEmpty) {
@@ -49,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasData) {
             return Scaffold(
                 appBar: AppBar(
+                    toolbarHeight: 130,
                     leading: null,
                     automaticallyImplyLeading: false,
                     title: Text(
@@ -60,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     centerTitle: true,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: mainColor,
                     shadowColor: Colors.transparent,
                     actions: [
                       IconButton(
@@ -110,44 +112,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Icon(Icons.add),
                 ),
-                backgroundColor: const Color(0xff262129),
-                body: Padding(
-                  padding: EdgeInsets.only(
-                      left: width * 0.1, right: width * 0.1, top: 20),
-                  child: Container(
-                    height: height * 0.75,
-                    width: width * 0.8,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.7),
-                            blurRadius: 4,
-                            offset: const Offset(4, 8), // Shadow position
-                          ),
-                        ],
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(40))),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: height * 0.01,
-                          left: width * 0.05,
-                          right: width * 0.05,
-                          bottom: height * 0.01),
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                              document.data()! as Map<String, dynamic>;
-                          return ListElement(
-                              text: data['name'],
-                              idGroup: widget.idGroup,
-                              reference: document.reference.id);
-                        }).toList(),
-                      ),
-                    ),
+                backgroundColor: mainColor,
+                body: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30)),
+                  ),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return ListElement(
+                          text: data['name'],
+                          idGroup: widget.idGroup,
+                          reference: document.reference.id);
+                    }).toList(),
                   ),
                 ));
           } else if (snapshot.hasError) {

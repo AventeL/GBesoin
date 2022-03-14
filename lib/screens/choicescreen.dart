@@ -13,12 +13,14 @@ class ChoiceScreen extends StatelessWidget {
       return const SizedBox();
     } else {
       return TextButton(
-          onPressed: () async {
-            AuthenticationHelper().signOut();
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
-          },
-          child: const Text("Se déconnecter"));
+        onPressed: () async {
+          AuthenticationHelper().signOut();
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
+        },
+        child:
+            const Text("Se déconnecter", style: TextStyle(color: Colors.white)),
+      );
     }
   }
 
@@ -32,8 +34,10 @@ class ChoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color mainColor = const Color(0xff8D0008);
+
     return Scaffold(
-      backgroundColor: const Color(0xff262129),
+      backgroundColor: const Color(0xff18181B),
       appBar: AppBar(
         automaticallyImplyLeading: !checkFirstTime(),
         backgroundColor: Colors.transparent,
@@ -47,7 +51,6 @@ class ChoiceScreen extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.15),
-            color: const Color(0xff262129),
             child: Column(
               children: [
                 Padding(
@@ -56,12 +59,11 @@ class ChoiceScreen extends StatelessWidget {
                   ),
                   child: Container(
                     width: 200,
-                    height: 100,
-                    color: Colors.green,
+                    child: Image.asset('assets/logo.png'),
                   ),
                 ),
                 AnimatedButton(
-                  color: Colors.green,
+                  color: mainColor,
                   width: MediaQuery.of(context).size.width * 0.6,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -81,7 +83,7 @@ class ChoiceScreen extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 25),
                     child: AnimatedButton(
-                      color: Colors.green,
+                      color: mainColor,
                       width: MediaQuery.of(context).size.width * 0.6,
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
