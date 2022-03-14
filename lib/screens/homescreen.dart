@@ -35,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('element')
         .where('idGroup', isEqualTo: widget.idGroup)
         .snapshots();
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     StorageHelper().getGroupById(widget.idGroup).then(
       (value) {
         setState(() {

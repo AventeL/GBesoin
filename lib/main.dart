@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gbesoin/providers/local_storage.dart';
-import 'package:gbesoin/screens/choicescreen.dart';
 import 'package:gbesoin/screens/homescreen.dart';
 import 'package:gbesoin/screens/loginscreen.dart';
 import 'package:firebase_core/firebase_core.dart';

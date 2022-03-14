@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:gbesoin/main.dart';
 import 'package:gbesoin/providers/auth_firebase.dart';
 import 'package:gbesoin/screens/choicescreen.dart';
 
