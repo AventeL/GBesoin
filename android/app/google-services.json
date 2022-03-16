@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:245749094954:android:6ec42c9ce709b76a100153",
+        "mobilesdk_app_id": "1:245749094954:android:6cae694ddf467001100153",
         "android_client_info": {
-          "package_name": "com.example.gbesoin"
+          "package_name": "com.aventelcorp.gbesoin"
         }
       },
       "oauth_client": [

@@ -166,7 +166,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     password:
                                         Crypt.sha256(passwordController.text)
                                             .toString());
-                                Navigator.of(context).pushReplacement(
+                                await Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             HomeScreen(idGroup: newId)));
@@ -248,7 +248,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                               if (canConnect(groupNameController.text)) {
                                 LocalStorage()
                                     .storeIdGroup(groups[0]['idGroup']);
-                                Navigator.of(context)
+                                await Navigator.of(context)
                                     .pushReplacement(MaterialPageRoute(
                                         builder: (context) => HomeScreen(
                                               idGroup: groups[0]['idGroup'],
